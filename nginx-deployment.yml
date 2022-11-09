@@ -18,10 +18,10 @@ spec:
           requiredDuringSchedulingIgnoredDuringExecution:
           - labelSelector:
               matchExpressions:
-              - key: reason
+              - key: app
                 operator: In
                 values:
-                - kubernetes_task
+                - myapp
             topologyKey: kubernetes.io/hostname
       tolerations:
         - key: app
