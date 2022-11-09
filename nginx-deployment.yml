@@ -13,6 +13,23 @@ spec:
         app: myapp
         type: webserver
     spec:
+      affinity:
+        podAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: reason
+                operator: In
+                values:
+                - kubernetes_task
+            topologyKey: kubernetes.io/hostname
+      tolerations:
+        - key: app
+          operator: Equal
+          value: kubernetes_trello
+          effect: NoSchedule
+      nodeSelector:
+        reason: kubernetes_task
       containers:
       - name: nginx-container
         image: nginx  
