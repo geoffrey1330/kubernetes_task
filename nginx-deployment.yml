@@ -46,7 +46,6 @@ spec:
             name: myapp-config
         - secretRef:
             name: myapp-secret
-
   replicas: 3
   selector:
     matchLabels:
