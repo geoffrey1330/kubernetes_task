@@ -41,6 +41,11 @@ spec:
         image: nginx  
         ports:
           - containerPort: 80
+        envFrom:
+        - configMapRef:
+            name: myapp-config
+        - secretRef:
+            name: myapp-secret
   replicas: 3
   selector:
     matchLabels:
