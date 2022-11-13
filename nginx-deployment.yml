@@ -41,6 +41,20 @@ spec:
         image: nginx  
         ports:
           - containerPort: 80
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          failureThreshold: 8
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          failureThreshold: 8 
         envFrom:
         - configMapRef:
             name: myapp-config
