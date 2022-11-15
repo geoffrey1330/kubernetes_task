@@ -60,6 +60,19 @@ spec:
             name: myapp-config
         - secretRef:
             name: myapp-secret
+        volumeMounts:
+          - mountPath: /opt
+            name: data-volume
+      - name: redis-container
+        image: redis
+        volumeMounts:
+          - mountPath: /data
+            name: data-volume
+      volumes:
+        - name: data-volume
+          hostPath:
+            path: /data
+            type: Directory
   replicas: 3
   selector:
     matchLabels:
