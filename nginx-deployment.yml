@@ -66,7 +66,7 @@ spec:
       - name: redis-container
         image: redis
         volumeMounts:
-          - mountPath: /opt
+          - mountPath: /data
             name: data-volume
       volumes:
         - name: data-volume
