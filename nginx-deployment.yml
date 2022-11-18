@@ -63,11 +63,25 @@ spec:
         volumeMounts:
           - mountPath: /opt
             name: data-volume
+        resources:
+          requests:
+            memory: "0.5Gi"
+            cpu: 0.2
+          limits:
+            memory: "1Gi"
+            cpu: 0.5
       - name: redis-container
         image: redis
         volumeMounts:
           - mountPath: /data
             name: data-volume
+        resources:
+          requests:
+            memory: "0.5Gi"
+            cpu: 0.2
+          limits:
+            memory: "1Gi"
+            cpu: 0.5
       volumes:
         - name: data-volume
           hostPath:
