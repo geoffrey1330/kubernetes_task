@@ -22,7 +22,4 @@ service:
     externalPort: 80
     internalPort: 80
 
-resources:
-  staticIp: reactapp
-
 tolerations: []
