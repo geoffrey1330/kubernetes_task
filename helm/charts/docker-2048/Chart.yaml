@@ -4,9 +4,7 @@ version: 1.0.0
 description: helm chart for  https://github.com/geoffrey1330/kubernetes_task/helm
 
 keywords:
-  - nodejs
-  - reactjs
-  - express
+  - docker-2048
   - chart
 
 home: https://github.com/geoffrey1330/kubernetes_task/helm
