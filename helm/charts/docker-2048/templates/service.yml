@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.service.docker_2048.name }}
+spec:
+  selector:
+    app: {{ .Values.apps.docker_2048.labels.app }}
+    type: {{ .Values.apps.docker_2048.labels.type }}
+  ports:
+    - protocol: {{ .Values.service.docker_2048.protocol }}
+      port: {{ .Values.service.docker_2048.externalPort }}
+      targetPort: {{ .Values.service.docker_2048.internalPort }}
+  type: {{ .Values.service.docker_2048.type }}

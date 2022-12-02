@@ -1,0 +1,28 @@
+# for discovering services and pods
+
+namespace: default
+apps:
+  docker_2048:
+    name: myapp-deployment
+    
+    replicaCount: 3
+    labels:
+      app: myapp
+      type: docker-2048
+    container:
+      name: docker-2048-container
+      repository: alexwhen/docker-2048
+  pullPolicy: Always
+
+service:
+  docker_2048:
+    name: myapp-service
+    type: LoadBalancer
+    protocol: TCP
+    externalPort: 80
+    internalPort: 80
+
+resources:
+  staticIp: reactapp
+
+tolerations: []

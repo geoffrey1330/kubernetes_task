@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.apps.docker_2048.name }}
+  labels:
+    app: {{ .Values.apps.docker_2048.labels.app }}
+    type: {{ .Values.apps.docker_2048.labels.type }}
+spec:  
+  minReadySeconds: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  template:
+    metadata:
+      name: myapp-pod
+      labels:
+        app: {{ .Values.apps.docker_2048.labels.app }}
+        type: {{ .Values.apps.docker_2048.labels.type }}
+    spec:
+      containers:
+      - name: {{ .Values.apps.docker_2048.container.name }}
+        image: {{ .Values.apps.docker_2048.container.repository }}
+        ports:
+          - containerPort: {{ .Values.service.docker_2048.internalPort }}
+        imagePullPolicy: {{ .Values.apps.pullPolicy }}
+        readinessProbe:
+          httpGet:
+            path: /
+            port: {{ .Values.service.docker_2048.internalPort }}
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          failureThreshold: 8
+        livenessProbe:
+          httpGet:
+            path: /
+            port: {{ .Values.service.docker_2048.internalPort }}
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          failureThreshold: 8 
+        resources:
+          requests:
+            memory: "1Gi"
+            cpu: 0.5
+          limits:
+            memory: "2Gi"
+            cpu: 1.0
+  replicas: {{ .Values.apps.docker_2048.replicaCount}}
+  selector:
+    matchLabels:
+      type: {{ .Values.apps.docker_2048.labels.type }}
