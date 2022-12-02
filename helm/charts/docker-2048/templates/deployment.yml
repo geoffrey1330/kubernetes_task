@@ -41,11 +41,11 @@ spec:
           failureThreshold: 8 
         resources:
           requests:
-            memory: "1Gi"
-            cpu: 0.5
+            memory: {{ .Values.apps.docker_2048.resources.requests.memory }}
+            cpu: {{ .Values.apps.docker_2048.resources.requests.cpu }}
           limits:
-            memory: "2Gi"
-            cpu: 1.0
+            memory: {{ .Values.apps.docker_2048.resources.limits.memory }}
+            cpu: {{ .Values.apps.docker_2048.resources.limits.cpu }}
   replicas: {{ .Values.apps.docker_2048.replicaCount}}
   selector:
     matchLabels:
