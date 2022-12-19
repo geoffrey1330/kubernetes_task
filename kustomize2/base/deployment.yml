@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp-deployment
+  namespace: default
+  labels:
+    app: myapp
+    type: docker-2048
+spec:  
+  minReadySeconds: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  template:
+    metadata:
+      name: myapp-pod
+      labels:
+        app: myapp
+        type: docker-2048
+    spec:
+      containers:
+      - name: docker-2048-container
+        image: alexwhen/docker-2048  
+        ports:
+          - containerPort: 80
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          failureThreshold: 8
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          failureThreshold: 8 
+        resources:
+          requests:
+            memory: "1Gi"
+            cpu: 0.5
+          limits:
+            memory: "2Gi"
+            cpu: 1.0
+  replicas: 1
+  selector:
+    matchLabels:
+      type: docker-2048
