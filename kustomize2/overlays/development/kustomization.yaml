@@ -1,0 +1,8 @@
+---
+namespace: development
+namePrefix: development-
+resources:
+- ../../base
+- namespace.yaml
+patchesStrategicMerge:
+- deployment.yml
