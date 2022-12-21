@@ -13,5 +13,3 @@ spec:
   tolerations:
   - operator: Exists
     effect: NoSchedule
-
-    
