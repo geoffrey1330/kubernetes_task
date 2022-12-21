@@ -7,9 +7,4 @@ metadata:
   annotations:
     eks.amazonaws.com/role-arn: arn:aws:iam::142180047173:role/s3main-oidc
 
-
-
-
-
-
-           
+          
