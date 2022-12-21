@@ -7,4 +7,9 @@ metadata:
   annotations:
     eks.amazonaws.com/role-arn: arn:aws:iam::142180047173:role/dynamodbmain-oidc
 
+
+
+
+
+
     
