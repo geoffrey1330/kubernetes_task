@@ -3,13 +3,10 @@
 namespace: default
 frontend:
   name: frontend
-  serviceAccountName: aws-main
+  serviceAccountName: aws-s3main
   repository: amazon/aws-cli
 
 backend:
   name: backend
-  serviceAccountName: aws-main
+  serviceAccountName: aws-dynamodbmain
   repository: amazon/aws-cli
-
-sa:
-  serviceAccountName: aws-main
