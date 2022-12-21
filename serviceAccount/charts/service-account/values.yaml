@@ -1,0 +1,15 @@
+# for discovering services and pods
+
+namespace: default
+frontend:
+  name: frontend
+  serviceAccountName: aws-main
+  repository: amazon/aws-cli
+
+backend:
+  name: backend
+  serviceAccountName: aws-main
+  repository: amazon/aws-cli
+
+sa:
+  serviceAccountName: aws-main

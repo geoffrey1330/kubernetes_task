@@ -9,3 +9,7 @@ output "kubeconfig-certificate-authority-data" {
 output "name" {
   value = aws_eks_cluster.main_cluster.name
 }
+
+output "main_policy_arn" {
+  value = aws_iam_role.main_oidc.arn
+}
