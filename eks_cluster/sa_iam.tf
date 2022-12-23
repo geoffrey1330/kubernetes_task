@@ -86,10 +86,10 @@ resource "aws_iam_policy" "dynamodbmain-policy" {
   policy = jsonencode({
     Statement = [{
       Action = [
-        "dynamodb:*"    
+        "dynamodb:*", 
       ]
-      Effect   = "Allow"
-      Resource = "arn:aws:dynamodb:::*"
+      Effect   = "Allow",
+      Resource = "*"
     }
     ]
     Version = "2012-10-17"
