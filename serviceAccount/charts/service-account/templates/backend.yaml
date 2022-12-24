@@ -14,4 +14,11 @@ spec:
   - operator: Exists
     effect: NoSchedule
 
-    
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ .Values.backend.serviceAccountName }}
+  namespace: {{ .Values.namespace }}
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::142180047173:role/dynamodbmain-oidc
