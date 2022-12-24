@@ -63,3 +63,4 @@ resource "aws_iam_role_policy_attachment" "main-CloudWatchAgentServerPolicy" {
   policy_arn = "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"
   role       = aws_iam_role.node_role.name
 }
+

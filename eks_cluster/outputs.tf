@@ -9,3 +9,11 @@ output "kubeconfig-certificate-authority-data" {
 output "name" {
   value = aws_eks_cluster.main_cluster.name
 }
+
+output "s3main_policy_arn" {
+  value = aws_iam_role.s3main_oidc.arn
+}
+
+output "dynamodbmain_policy_arn" {
+  value = aws_iam_role.dynamodbmain_oidc.arn
+}

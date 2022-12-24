@@ -1,0 +1,19 @@
+apiVersion: v1
+name: service-account
+version: 1.0.0
+description: helm chart for  https://github.com/geoffrey1330/kubernetes_task/serviceAccount
+
+keywords:
+  - service-account
+  - chart
+
+home: https://github.com/geoffrey1330/kubernetes_task/serviceAccount
+
+sources:
+  - https://github.com/geoffrey1330/kubernetes_task/serviceAccount
+  
+maintainers: # (optional)
+  - name: Geoffrey Israel
+    email: israelgeoffrey13@gmail.com 
+
+appVersion: 1.0.0

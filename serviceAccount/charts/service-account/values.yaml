@@ -1,0 +1,12 @@
+# for discovering services and pods
+
+namespace: default
+frontend:
+  name: frontend
+  serviceAccountName: aws-s3main
+  repository: amazon/aws-cli
+
+backend:
+  name: backend
+  serviceAccountName: aws-dynamodbmain
+  repository: amazon/aws-cli
