@@ -1,0 +1,37 @@
+# for discovering services and pods
+
+namespace: docker-2048
+apps:
+  docker_2048:
+    name: myapp-deployment
+    
+    replicaCount: 3
+    labels:
+      app: myapp
+      type: docker-2048
+    container:
+      name: docker-2048-container
+      repository: alexwhen/docker-2048
+    resources:
+      requests:
+        cpu: 0.5
+        memory: "1Gi"
+      limits:
+        cpu: 1.0
+        memory: "2Gi"
+  pullPolicy: Always
+
+service:
+  docker_2048:
+    name: myapp-service
+    type: ClusterIP
+    protocol: TCP
+    externalPort: 80
+    internalPort: 80
+
+ingress:
+  docker_2048:
+    host: demo.israeltrello.be
+
+
+tolerations: []
