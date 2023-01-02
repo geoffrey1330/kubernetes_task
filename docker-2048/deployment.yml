@@ -45,7 +45,7 @@ spec:
           limits:
             memory: "2Gi"
             cpu: 1.0
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       type: docker-2048
