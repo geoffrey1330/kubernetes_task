@@ -72,12 +72,19 @@ jobs:
       env:
         TF_VAR_aws_region: us-east-1
 
-    - name: Helm Deploy
+    - name: Terraform Setup for Helm Deployment
       run: |
         cd helm
-        helm upgrade --install my-app ./my-app-chart
+        terraform init
       env:
-        KUBECONFIG: ${{ env.KUBECONFIG }}
+        TF_VAR_aws_region: us-east-1
+
+    - name: Terraform Apply for Helm Deployment
+      run: |
+        cd helm
+        terraform apply -auto-approve
+      env:
+        TF_VAR_aws_region: us-east-1
 
     - name: Test Step (Add Your Test Command)
       run: |
