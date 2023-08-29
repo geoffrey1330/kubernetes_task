@@ -1,0 +1,99 @@
+name: Deploy to EKS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Terraform Linting
+      run: |
+        cd ecr_repository
+        terraform fmt -check
+        terraform validate
+        cd ../eks_cluster
+        terraform fmt -check
+        terraform validate
+      env:
+        TF_VAR_aws_region: us-east-1
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
+
+    - name: Set up kubectl
+      uses: azure/setup-kubectl@v1
+      with:
+        install-missing: true
+
+    - name: Terraform Setup for ECR
+      run: |
+        cd ecr_repository
+        terraform init
+      env:
+        TF_VAR_aws_region: us-east-1
+
+    - name: Terraform Apply for ECR
+      run: |
+        cd ecr_repository
+        terraform apply -auto-approve
+      env:
+        TF_VAR_aws_region: us-east-1
+
+    - name: Docker Build and Push
+      run: |
+        cd app
+        docker build -t my-app .
+        docker tag my-app:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/my-app:latest
+        aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com
+        docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/my-app:latest
+
+    - name: Terraform Setup for EKS Cluster
+      run: |
+        cd eks_cluster
+        terraform init
+      env:
+        TF_VAR_aws_region: us-east-1
+
+    - name: Terraform Apply for EKS Cluster
+      run: |
+        cd eks_cluster
+        terraform apply -auto-approve
+      env:
+        TF_VAR_aws_region: us-east-1
+
+    - name: Helm Deploy
+      run: |
+        cd helm
+        helm upgrade --install my-app ./my-app-chart
+      env:
+        KUBECONFIG: ${{ env.KUBECONFIG }}
+
+    - name: Test Step (Add Your Test Command)
+      run: |
+        # Add your test command here
+        echo "Running tests..."
+
+    - name: Clean up
+      run: |
+        cd eks_cluster
+        terraform destroy -auto-approve
+      env:
+        TF_VAR_aws_region: us-east-1
+
+    - name: Clean up ECR
+      run: |
+        cd ecr
+        terraform destroy -auto-approve
+      env:
+        TF_VAR_aws_region: us-east-1
