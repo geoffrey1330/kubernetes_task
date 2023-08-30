@@ -86,21 +86,24 @@ jobs:
       env:
         TF_VAR_aws_region: us-east-1
 
+    - name: Install Helm
+      run: |
+        curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+
+    - name: Add Prometheus and Grafana Helm Repositories
+      run: |
+        helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+        helm repo add grafana https://grafana.github.io/helm-charts
+
+    - name: Deploy Prometheus
+      run: |
+        helm install prometheus prometheus-community/prometheus -f helm/prometheus-values.yaml
+
+    - name: Deploy Grafana
+      run: |
+        helm install grafana grafana/grafana -f helm/grafana-values.yaml
+
     - name: Test Step (Add Your Test Command)
       run: |
         # Add your test command here
         echo "Running tests..."
-
-    - name: Clean up
-      run: |
-        cd eks_cluster
-        terraform destroy -auto-approve
-      env:
-        TF_VAR_aws_region: us-east-1
-
-    - name: Clean up ECR
-      run: |
-        cd ecr
-        terraform destroy -auto-approve
-      env:
-        TF_VAR_aws_region: us-east-1
