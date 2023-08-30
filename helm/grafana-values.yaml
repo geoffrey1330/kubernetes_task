@@ -1,0 +1,28 @@
+grafana:
+  enabled: true
+  adminUser: admin
+  adminPassword: admin
+  service:
+    type: ClusterIP
+
+persistence:
+  enabled: true
+  storageClassName: "standard"
+  size: 10Gi
+
+datasources:
+  datasources.yaml:
+    apiVersion: 1
+    datasources:
+    - name: Prometheus
+      type: prometheus
+      url: http://prometheus-server
+      access: proxy
+      isDefault: true
+
+dashboards:
+  default:
+    default:
+      url: "https://grafana.com/grafana/dashboards/your-dashboard-id"
+      editable: false
+      gnetId: "grafana-dashboard"
